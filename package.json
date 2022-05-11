@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "celebrate": "^15.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-mongoose-helper": "^1.0.11",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3"
+  },
+  "scripts": {
+    "back": "nodemon ./src/index.js",
+    "start": "node ./src/index.js"
+  },
+  "name": "ticketmanager-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DinizismoTeam/TicketManager-back.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DinizismoTeam/TicketManager-back/issues"
+  },
+  "homepage": "https://github.com/DinizismoTeam/TicketManager-back#readme",
+  "description": ""
+}
