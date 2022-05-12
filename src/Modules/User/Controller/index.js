@@ -3,7 +3,9 @@ const Cliente = require('../Model/cliente');
 const Organizador = require('../Model/organizador');
 const Admin = require('../Model/admin');
 
-async function create(req, res, next) {
+async function create(req, res) {
+
+  try {
 
   const { username, email, password } = req.body;
 
@@ -32,6 +34,9 @@ async function create(req, res, next) {
   user.password = null;
 
   return res.status(200).send('Usuario Criado!');
+} catch ({ message }) {
+  return res.status(500).json({ message });
+}
 }
 
 async function readOne(req, res) {
@@ -87,7 +92,8 @@ async function isClient(req, res) {
     if(!cliente){
       cliente = await Cliente.create({
         cpf,
-        telefone
+        telefone,
+        user: _id
       })
     }else{
       return res
@@ -128,7 +134,8 @@ async function isOrganizador(req, res) {
     if(!organizador){
       organizador = await Organizador.create({
         nome,
-        CNPJ
+        CNPJ,
+        user: _id
       })
     }else{
       return res
@@ -160,7 +167,8 @@ async function isAdmin(req, res) {
     const nome = req.body.nome;
 
     const admin = await Admin.create({
-        nome
+        nome,
+        user: _id
     })
 
     const user = await User.findById(_id);

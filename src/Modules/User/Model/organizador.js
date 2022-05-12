@@ -9,7 +9,17 @@ const OrganizadorSchema = new mongoose.Schema(
     CNPJ: {
         type: String,
         required: true
-    }
+    },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User'
+    },
+    eventos: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Evento'
+      }
+    ]
   },
   {
     timestamps: {

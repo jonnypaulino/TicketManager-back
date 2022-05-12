@@ -4,6 +4,8 @@ const { errors } = require('celebrate');
 
 /* IMPORTING ROUTES */
 const userRoutes = require('./Modules/User/Routes');
+const eventoRoutes = require('./Modules/Evento/Routes');
+const categoriaRoutes = require('./Modules/Categoria/Routes');
 
 const app = express();
 
@@ -14,5 +16,7 @@ app.use(errors());
 
 /* ROUTES */
 app.use(userRoutes);
+app.use(eventoRoutes);
+app.use(categoriaRoutes);
 
 module.exports = app;

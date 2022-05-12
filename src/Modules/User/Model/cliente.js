@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ClientSchema = new mongoose.Schema(
   {
     cpf: {
-      type: String,
+      type: Number,
       required: false,
       unique: true,
     },
@@ -16,6 +16,10 @@ const ClientSchema = new mongoose.Schema(
             type: String,
             default: ''
         }
+    },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User'
     },
     telefone: [
         {
