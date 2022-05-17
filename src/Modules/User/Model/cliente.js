@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ClientSchema = new mongoose.Schema(
   {
     cpf: {
-      type: Number,
+      type: String,
       required: false,
       unique: true,
     },
