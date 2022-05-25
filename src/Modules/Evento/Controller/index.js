@@ -1,37 +1,59 @@
-const Organizador = require('../../User/Model/organizador');
+const User = require('../../User/Model/index');
 const Evento = require('../Model/index')
-const Categoria = require('../../Categoria/Model/index')
 
 async function createEvento(req, res) {
 
 try {
 
-const { titulo, descricao, date, organizadorID, categoriaID } = req.body;
+const { time1, time2, data, descricao, localName, localNumber, localComplement, cep, rua, bairro, estado, pais , capacidadeN, valorN,
+        capacidadeS, valorS, capacidadeL, valorL, capacidadeO, valorO, capacidadeC, valorC, userID } = req.body;
 
-var organizador = await Organizador.findById(organizadorID);
+var user = await User.findById(userID);
 
-if(!organizador){
+if(!user){
     return res
         .status(404)
-        .json({ message: 'Organizador não foi encontrado!' });
+        .json({ message: 'Usuario não foi encontrado!' });
 }
 
+if(user.isOrganizador == false){
+    return res
+        .status(409)
+        .json({ message: 'Usuario não eh organizador!' });
+}
+
+var titulo = `${time1} X ${time2}`
+
 const evento = await Evento.create({
-    titulo,
-    descricao,
-    dates: date,
-    categoriaID: categoriaID
+    titulo: titulo,
+    descricao: descricao,
+    data: data,
 })
 
-await Categoria.findByIdAndUpdate(categoriaID, {
-    $push:{
-        eventos: evento._id
-    }
-})
+evento.local.localName = localName;
+evento.local.localNumber = localNumber;
+evento.local.localComplement = localComplement;
+evento.endereco.cep = cep;
+evento.endereco.rua = rua;
+evento.endereco.bairro = bairro;
+evento.endereco.estado = estado;
+evento.endereco.pais = pais;
+evento.assentoNorte.capacidadeN = capacidadeN;
+evento.assentoNorte.valorN = valorN;
+evento.assentoSul.capacidadeS = capacidadeS;
+evento.assentoSul.valorS = valorS;
+evento.assentoLeste.capacidadeL = capacidadeL;
+evento.assentoLeste.valorL = valorL;
+evento.assentoOeste.capacidadeO = capacidadeO;
+evento.assentoOeste.valorO = valorO;
+evento.assentoCamarote.capacidadeC = capacidadeC;
+evento.assentoCamarote.valorC = valorC;
 
-await Organizador.findByIdAndUpdate(organizadorID, {
+await evento.save();
+
+await User.findByIdAndUpdate(userID, {
     $push:{
-        eventos: evento._id
+        eventosOrganizador: evento._id
     }
 })
 
@@ -46,19 +68,19 @@ async function updateEvento(req, res) {
 
 try {
 
-const { date, organizadorID, eventoID } = req.body;
+const { data, userID, eventoID } = req.body;
 
-const organizador = await Organizador.findById(organizadorID);
+const user = await User.findById(userID);
 
-if(organizador.eventos.includes(eventoID) == false){
+if(user.eventosOrganizador.includes(eventoID) == false){
     return res
         .status(403)
         .json({ message: 'Voce nao possui tal permissao!' });
 }
 
-const evento = await Evento.findByIdAndUpdate(eventoID, {
-    $push:{
-        dates: date
+await Evento.findByIdAndUpdate(eventoID, {
+    $set:{
+        data: data
     }
 })
 

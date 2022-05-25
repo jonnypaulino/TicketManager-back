@@ -9,11 +9,29 @@ routes
   .post(
     celebrate({
       [Segments.BODY]: Joi.object().keys({
-        titulo: Joi.string().required(),
-        descricao: Joi.string(),
-        date: Joi.date(),
-        organizadorID: Joi.string().required(),
-        categoriaID: Joi.string().required(),
+        time1: Joi.string().required(),
+        time2: Joi.string().required(),
+        data: Joi.date().required(),
+        descricao: Joi.string().allow(null, '').max(500),
+        localName: Joi.string().required(),
+        localNumber: Joi.number().required(),
+        localComplement: Joi.string().required(),
+        cep: Joi.string().required(),
+        rua: Joi.string().required(),
+        bairro: Joi.string().required(),
+        estado: Joi.string().required(),
+        pais: Joi.string().required(),
+        capacidadeN: Joi.number().required(),
+        valorN: Joi.number().required(),
+        capacidadeS: Joi.number().required(),
+        valorS: Joi.number().required(),
+        capacidadeL: Joi.number().required(),
+        valorL: Joi.number().required(),
+        capacidadeO: Joi.number().required(),
+        valorO: Joi.number().required(),
+        capacidadeC: Joi.number().required(),
+        valorC: Joi.number().required(),
+        userID: Joi.string().required(),
       }),
     }),
     Controller.createEvento
@@ -22,8 +40,8 @@ routes
 routes.route('/updateevento').put(
   celebrate({
     [Segments.BODY]: Joi.object().keys({
-      date: Joi.date().required(),
-      organizadorID: Joi.string().required(),
+      data: Joi.date().required(),
+      userID: Joi.string().required(),
       eventoID: Joi.string().required(),
     }),
   }),

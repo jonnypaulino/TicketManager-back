@@ -1,13 +1,10 @@
 const User = require('../Model/index');
-const Cliente = require('../Model/cliente');
-const Organizador = require('../Model/organizador');
-const Admin = require('../Model/admin');
 
 async function create(req, res) {
 
   try {
 
-  const { username, email, password } = req.body;
+  const { username, email, password, func, cpf, primeiroNome, sobrenome, telefone, nomeOrganizador, cnpj, nomeAdmin } = req.body;
 
   const validUsername = await User.find({ username: username })
 
@@ -31,7 +28,26 @@ async function create(req, res) {
     password
   });
 
+  if(func == 1){
+    user.cpf = cpf;
+    user.nome.primeiroNome = primeiroNome;
+    user.nome.sobrenome = sobrenome;
+    user.telefone.push(telefone);
+    user.isCliente = true;
+  }
+  if(func == 2){
+    user.nomeOrganizador = nomeOrganizador;
+    user.cnpj = cnpj;
+    user.isOrganizador = true;
+  }
+  if(func == 3){
+    user.nomeAdmin = nomeAdmin;
+    user.isAdmin = true;
+  }
+
   user.password = null;
+
+  await user.save();
 
   return res.status(200).send('Usuario Criado!');
 } catch ({ message }) {
@@ -79,123 +95,10 @@ async function remove(req, res) {
   }
 }
 
-async function isClient(req, res) {
-  try {
-    const _id = req.body;
-    const cpf = req.body.cpf;
-    const primeiroNome = req.body.primeiroNome;
-    const sobrenome = req.body.sobrenome;
-    const telefone = req.body.telefone;
-
-    var cliente = await Cliente.findOne({cpf: cpf})
-
-    if(!cliente){
-      cliente = await Cliente.create({
-        cpf,
-        telefone,
-        user: _id
-      })
-    }else{
-      return res
-        .status(409)
-        .json({ message: 'Esse cliente ja esta cadastrado!' });
-    }
-
-    cliente.nome.primeiroNome = primeiroNome
-    cliente.nome.sobrenome = sobrenome
-
-    const user = await User.findById(_id);
-
-    if (!user) {
-      return res
-        .status(404)
-        .json({ message: 'Esse usuário não foi encontrado!' });
-    }
-
-    user.cliente = cliente._id
-
-    await user.save();
-    await cliente.save();
-
-    return res.status(200).json({ message: 'Usuário atualizado' });
-  } catch ({ message }) {
-    return res.status(500).json({ message });
-  }
-}
-
-async function isOrganizador(req, res) {
-  try {
-    const _id = req.body;
-    const nome = req.body.nome;
-    const CNPJ = req.body.CNPJ;
-
-    var organizador = await Organizador.findOne({CNPJ: CNPJ})
-
-    if(!organizador){
-      organizador = await Organizador.create({
-        nome,
-        CNPJ,
-        user: _id
-      })
-    }else{
-      return res
-        .status(409)
-        .json({ message: 'Esse organizador ja esta cadastrado!' });
-    }
-
-    const user = await User.findById(_id);
-
-    if (!user) {
-      return res
-        .status(404)
-        .json({ message: 'Esse usuário não foi encontrado!' });
-    }
-
-    user.organizador = organizador._id
-
-    await user.save();
-
-    return res.status(200).json({ message: 'Usuário atualizado' });
-  } catch ({ message }) {
-    return res.status(500).json({ message });
-  }
-}
-
-async function isAdmin(req, res) {
-  try {
-    const _id = req.body;
-    const nome = req.body.nome;
-
-    const admin = await Admin.create({
-        nome,
-        user: _id
-    })
-
-    const user = await User.findById(_id);
-
-    if (!user) {
-      return res
-        .status(404)
-        .json({ message: 'Esse usuário não foi encontrado!' });
-    }
-
-    user.admin = admin._id
-
-    await user.save();
-
-    return res.status(200).json({ message: 'Usuário atualizado' });
-  } catch ({ message }) {
-    return res.status(500).json({ message });
-  }
-}
-
 module.exports = {
 
   create,
   readOne,
-  isClient,
   remove,
-  isOrganizador,
-  isAdmin,
 
 };

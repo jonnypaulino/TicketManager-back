@@ -13,6 +13,14 @@ routes
         username: Joi.string().required(),
         email: Joi.string().required().email(),
         password: Joi.string().required(),
+        cpf: Joi.string().allow(null, '').max(500),
+        primeiroNome: Joi.string().allow(null, '').max(500),
+        sobrenome: Joi.string().allow(null, '').max(500),
+        telefone: Joi.string().allow(null, '').max(500),
+        nomeOrganizador: Joi.string().allow(null, '').max(500),
+        cnpj: Joi.string().allow(null, '').max(500),
+        nomeAdmin: Joi.string().allow(null, '').max(500),
+        func: Joi.number().required(),
       }),
     }),
    
@@ -38,40 +46,6 @@ routes.route('/user/:_id').get(
     }),
   }),
   Controller.readOne,
-);
-
-routes.route('/isclient').put(
-  celebrate({
-    [Segments.BODY]: Joi.object().keys({
-      _id: Joi.string().required(),
-      cpf: Joi.string().required(),
-      primeiroNome: Joi.string().required(),
-      sobrenome: Joi.string().required(),
-      telefone: Joi.string().required(),
-    }),
-  }),
-  Controller.isClient,
-);
-
-routes.route('/isorganizador').put(
-  celebrate({
-    [Segments.BODY]: Joi.object().keys({
-      _id: Joi.string().required(),
-      nome: Joi.string().required(),
-      CNPJ: Joi.string().required(),
-    }),
-  }),
-  Controller.isOrganizador,
-);
-
-routes.route('/isadmin').put(
-  celebrate({
-    [Segments.BODY]: Joi.object().keys({
-      _id: Joi.string().required(),
-      nome: Joi.string().required(),
-    }),
-  }),
-  Controller.isAdmin,
 );
 
 module.exports = routes;

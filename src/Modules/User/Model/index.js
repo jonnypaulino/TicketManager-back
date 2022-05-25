@@ -19,18 +19,54 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    cliente: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Cliente'
+    cpf:{
+      type: String,
+      required: false,
+      unique: true
     },
-    organizador: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Organizador'
+    nome: {
+      primeiroNome:{
+          type: String,
+          default: ''
+      },
+      sobrenome:{
+          type: String,
+          default: ''
+      }
     },
-    admin:{
-      type: mongoose.Schema.ObjectId,
-      ref: 'Admin'
-    }
+    telefone: [
+      {
+          type: String,
+          required: false
+      }
+    ],
+    nomeOrganizador: {
+      type: String
+    },
+    cnpj: {
+      type: String
+    },
+    nomeAdmin: {
+      type: String
+    },
+    isCliente: {
+      type: Boolean,
+      default: false
+    },
+    isOrganizador: {
+      type: Boolean,
+      default: false
+    },
+    isAdmin:{
+      type: Boolean,
+      default: false
+    },
+    eventosOrganizador: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Evento'
+      }
+    ]
   },
   {
     timestamps: {
