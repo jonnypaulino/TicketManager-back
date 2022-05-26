@@ -3,21 +3,54 @@ const mongoose = require('mongoose');
 const IngressoSchema = new mongoose.Schema(
   {
     status: {
-        type: String,
-        default: 'ativo'
+      type: String,
+      default: 'ativo'
     },
-    clienteTelefone: {
-        type: String,
-        ref: 'Cliente'
+    envento: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'Evento'
     },
-    tipoIngressoID:{
-        type: mongoose.Schema.ObjectId,
-        ref: 'TipoIngresso'
+    tipoIngresso: {
+      type: String,
     },
-    eventoID:{
-          type: mongoose.Schema.ObjectId,
-          ref: 'Evento'
+    quantidade: {
+      type: Number,
     },
+    valorFinal: {
+      type: Number,
+    },
+    tipoPagamento: {
+      type: Number,
+    },
+    cartao: {
+      numero:{
+        type: String
+      },
+      titular: {
+        type: String
+      },
+      cpf: {
+        type: String
+      },
+      data: {
+        type: Date
+      }
+    },
+    boleto: {
+      type: String
+    },
+    pix: {
+      qrCode: {
+        type: Array
+      },
+      copyPaste: {
+        type: String
+      }
+    },
+    foiPago: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: {

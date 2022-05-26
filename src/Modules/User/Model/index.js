@@ -66,6 +66,18 @@ const UserSchema = new mongoose.Schema(
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Evento'
       }
+    ],
+    carrinhoCliente:[
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Ingresso'
+      }
+    ],
+    ingressosCliente:[
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Ingresso'
+      }
     ]
   },
   {

@@ -34,6 +34,7 @@ routes
         userID: Joi.string().required(),
       }),
     }),
+    UserAuth.verifyToken,
     Controller.createEvento
   )
 
@@ -45,7 +46,30 @@ routes.route('/updateevento').put(
       eventoID: Joi.string().required(),
     }),
   }),
+  UserAuth.verifyToken,
   Controller.updateEvento
+)
+
+routes.route('/removeevento').put(
+  celebrate({
+    [Segments.BODY]: Joi.object().keys({
+      userID: Joi.string().required(),
+      eventoID: Joi.string().required(),
+    }),
+  }),
+  UserAuth.verifyToken,
+  Controller.removeEvento
+)
+
+routes.route('/readeventos').get(Controller.readEventos);
+
+routes.route('/readeventofromorganizador/:userID').get(
+  celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      userID: Joi.string().required(),
+    }),
+  }),
+  Controller.readEventosFromOrganizador
 )
 
 module.exports = routes;
