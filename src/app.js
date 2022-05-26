@@ -5,10 +5,7 @@ const { errors } = require('celebrate');
 /* IMPORTING ROUTES */
 const userRoutes = require('./Modules/User/Routes');
 const eventoRoutes = require('./Modules/Evento/Routes');
-const categoriaRoutes = require('./Modules/Categoria/Routes');
-const enderecoRoutes = require('./Modules/Endereco/Routes');
-const localRoutes = require('./Modules/Local/Routes');
-const salaRoutes = require('./Modules/Sala/Routes');
+const ingressoRoutes = require('./Modules/Ingresso/Routes')
 
 const app = express();
 
@@ -20,9 +17,6 @@ app.use(errors());
 /* ROUTES */
 app.use(userRoutes);
 app.use(eventoRoutes);
-app.use(categoriaRoutes);
-app.use(enderecoRoutes);
-app.use(localRoutes);
-app.use(salaRoutes);
+app.use(ingressoRoutes);
 
 module.exports = app;
