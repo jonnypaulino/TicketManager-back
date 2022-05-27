@@ -49,7 +49,7 @@ async function finalizaPagamento(req, res) {
 
 try {
 
-const { tipoPagamentoNumber, numero, titular, cpf, data, boleto, qrCode, copyPaste, ingressoID, userID } = req.body;
+const { tipoPagamentoNumber, numero, titular, cpf, data, boleto, qrCode, copyPaste, ingressoID, userID, parcelas } = req.body;
 
 const ingresso = await Ingresso.findById(ingressoID)
 
@@ -80,6 +80,7 @@ if(tipoPagamentoNumber == 3){
 }
 
 ingresso.foiPago = true;
+ingresso.parcelas = parcelas;
 
 await ingresso.save();
 

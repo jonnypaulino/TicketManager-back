@@ -47,6 +47,10 @@ const IngressoSchema = new mongoose.Schema(
         type: String
       }
     },
+    parcelas: {
+      type: Number,
+      default: 1
+    },
     foiPago: {
       type: Boolean,
       default: false
