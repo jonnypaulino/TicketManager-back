@@ -99,9 +99,49 @@ return res.status(500).json({ message });
 }
 }
 
+async function readOneIngresso(req, res) {
+
+try {
+
+const { ingressoID } = req.params;
+
+const ingresso = await Ingresso.findById(ingressoID)
+
+if(!ingresso){
+    return res.status(404).send('Ingresso nao foi encontrado!');
+}
+
+return res.status(200).json(ingresso);
+
+} catch ({ message }) {
+return res.status(500).json({ message });
+}
+}
+
+async function readIngressosFromUser(req, res) {
+
+try {
+
+const { userID } = req.params;
+
+const user = await User.findById(userID).populate('ingressosCliente')
+
+if(!user){
+    return res.status(404).send('Usuario nao foi encontrado!');
+}
+
+return res.status(200).json(user.ingressosCliente);
+
+} catch ({ message }) {
+return res.status(500).json({ message });
+}
+}
+
 module.exports = {
 
     createIngresso,
     finalizaPagamento,
+    readOneIngresso,
+    readIngressosFromUser,
 
 };
