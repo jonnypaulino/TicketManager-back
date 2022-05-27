@@ -21,8 +21,7 @@ const UserSchema = new mongoose.Schema(
     },
     cpf:{
       type: String,
-      required: false,
-      unique: true
+      required: false
     },
     nome: {
       primeiroNome:{
