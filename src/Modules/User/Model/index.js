@@ -67,12 +67,10 @@ const UserSchema = new mongoose.Schema(
         ref: 'Evento'
       }
     ],
-    carrinhoCliente:[
-      {
+    carrinhoCliente: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Ingresso'
-      }
-    ],
+    },
     ingressosCliente:[
       {
         type: mongoose.SchemaTypes.ObjectId,

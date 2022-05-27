@@ -23,7 +23,6 @@ routes
         func: Joi.number().required(),
       }),
     }),
-   
     EmailInUse.emailInUse,
     Controller.create
   )

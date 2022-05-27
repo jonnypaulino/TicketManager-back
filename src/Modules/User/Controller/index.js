@@ -45,8 +45,6 @@ async function create(req, res) {
     user.isAdmin = true;
   }
 
-  user.password = null;
-
   await user.save();
 
   return res.status(200).send('Usuario Criado!');

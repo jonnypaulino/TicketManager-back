@@ -20,7 +20,7 @@ const IngressoSchema = new mongoose.Schema(
       type: Number,
     },
     tipoPagamento: {
-      type: Number,
+      type: String,
     },
     cartao: {
       numero:{
