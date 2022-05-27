@@ -107,6 +107,10 @@ if(user.eventosOrganizador.includes(eventoID) == false){
 
 await Evento.findByIdAndRemove(eventoID);
 
+user.eventosOrganizador.pull(eventoID);
+
+await user.save();
+
 return res.status(200).json('Evento removido!');
 
 } catch ({ message }) {
