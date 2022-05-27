@@ -131,6 +131,26 @@ return res.status(500).json({ message });
 }
 }
 
+async function readOneEvento(req, res) {
+
+try {
+
+const { eventoID } = req.params;
+
+const evento = await Evento.findById(eventoID);
+
+if(!evento){
+    return res
+        .status(404)
+        .json({ message: 'Evento não foi encontrado!' });
+}
+
+return res.status(200).json(evento);
+} catch ({ message }) {
+return res.status(500).json({ message });
+}
+}
+
 async function readEventosFromOrganizador(req, res) {
 
     try {
@@ -158,6 +178,7 @@ module.exports = {
     updateEvento,
     removeEvento,
     readEventos,
+    readOneEvento,
     readEventosFromOrganizador,
 
 };

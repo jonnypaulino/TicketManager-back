@@ -63,6 +63,15 @@ routes.route('/removeevento').put(
 
 routes.route('/readeventos').get(Controller.readEventos);
 
+routes.route('/readoneevento/:eventoID').get(
+  celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      eventoID: Joi.string().required(),
+    }),
+  }),
+  Controller.readOneEvento
+)
+
 routes.route('/readeventofromorganizador/:userID').get(
   celebrate({
     [Segments.PARAMS]: Joi.object().keys({
