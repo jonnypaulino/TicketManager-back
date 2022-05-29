@@ -31,7 +31,6 @@ const ingresso = await Ingresso.create({
     valorFinal: valorFinal,
     evento: eventoID
 })
-
 await User.findByIdAndUpdate(userID, {
     $set: {
         carrinhoCliente: ingresso._id
