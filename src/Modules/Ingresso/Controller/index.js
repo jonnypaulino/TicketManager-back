@@ -38,7 +38,7 @@ await User.findByIdAndUpdate(userID, {
     }
 })
 
-return res.status(200).json('Ingresso adicionado ao carrinho!');
+return res.status(200).json({idIngresso: ingresso._id});
 
 } catch ({ message }) {
 return res.status(500).json({ message });
